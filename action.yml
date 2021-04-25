@@ -1,0 +1,10 @@
+name: Angular Build Info
+description: Generate buildinfo.txt file to be packaged with angular applications
+inputs:
+  directory:
+    description: Directory where buildinfo.txt should be placed
+    required: true
+    default: dist
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
