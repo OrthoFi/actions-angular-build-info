@@ -5,6 +5,17 @@ inputs:
     description: Directory where buildinfo.txt should be placed
     required: true
     default: dist
+
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: composite
+  steps:
+    - name: Set Build Info
+      shell: pwsh
+      run: |
+        @{
+            actor          = "${{ github.actor }}"
+            ref            = "${{ github.ref }}"
+            sha            = "${{ github.sha }}"
+            productionMode = "${{ env.APP_PRODUCTION_MODE }}"
+            buildNumber    = "${{ github.run_id }}"
+        } | ConvertTo-Json | Out-File "${{inputs.directory}}/buildinfo.txt"
